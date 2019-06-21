@@ -1,0 +1,12 @@
+Package: thesis.package
+Type: Package
+Title: R package for master thesis
+Version: 0.1.0
+Author: Nina Louise Pedersen
+Maintainer: Nina Louise Pedersen <npede14@student.sdu.dk>
+Description: Implementation of code use din the master thesis to find the components in HSI data.
+    Mainly ICA methods but also other help functions.
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1
