@@ -2,7 +2,7 @@
 #'
 #' Implementation of the fixed point iteration method where a deflation scheme is used to find ICs.
 #'
-#' @param data.mat data matrix 80.000x216
+#' @param data.mat data matrix where the columns are bands
 #' @param p number of components
 #' @param max maximum number of iterations
 #'

@@ -4,20 +4,24 @@
 \alias{read.dataCube}
 \title{Function for creating data matrix from raw data file.}
 \usage{
-read.dataCube(HSIdata, rows)
+read.dataCube(HSIdata, rows, cols, bands)
 }
 \arguments{
 \item{HSIdata}{csv file}
 
 \item{rows}{number of rows}
+
+\item{cols}{number of columns}
+
+\item{bands}{number of bands}
 }
 \value{
 data.mat data in matrix format
 }
 \description{
-Implementation of the fixed point iteration method where a deflation scheme is used to find ICs.
+Creates a data matrix from a .csv file containing HSI data. The input data must be (rowsxcols)xbands
 }
 \examples{
-data.mat <- read.dataCube("syntetisk_aeble.csv",rows)
+data.mat <- read.dataCube("syntetisk_aeble.csv",rows,cols,bands)
 
 }

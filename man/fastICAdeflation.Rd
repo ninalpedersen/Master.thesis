@@ -7,7 +7,7 @@
 fastICAdeflation(data.mat, p, max = 200)
 }
 \arguments{
-\item{data.mat}{data matrix 80.000x216}
+\item{data.mat}{data matrix where the columns are bands}
 
 \item{p}{number of components}
 
