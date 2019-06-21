@@ -13,7 +13,7 @@
 #' @export
 
 fastICAparallel <- function(data.mat, p, max = 200){
-  r <- nrow(data.mat)#hehe
+  r <- nrow(data.mat)
   c <- ncol(data.mat)
   w.init <- matrix(rnorm(p^2), p, p)
   data.mat <- scale(data.mat, scale = FALSE) # centering
