@@ -13,7 +13,7 @@
 #' @export
 
 fastICAdeflation <- function(data.mat, p, max = 200){
-  r <- nrow(data.mat)
+  r <- nrow(data.mat) #test
   c <- ncol(data.mat)
   w.init <- matrix(rnorm(p^2), p, p)
   data.mat <- scale(data.mat, scale = FALSE) # centering
