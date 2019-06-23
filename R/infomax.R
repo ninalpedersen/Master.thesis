@@ -12,7 +12,7 @@
 #'
 #' @export
 
-fastICAparallel <- function(data.mat, p, max = 200){
+infomax <- function(data.mat, p, max = 200){
 
   #return(XX <- WW)
 }

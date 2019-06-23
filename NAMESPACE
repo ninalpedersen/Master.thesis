@@ -2,4 +2,5 @@
 
 export(fastICAdeflation)
 export(fastICAparallel)
+export(infomax)
 export(read.dataCube)
