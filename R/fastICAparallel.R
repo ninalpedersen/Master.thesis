@@ -29,10 +29,22 @@ fastICAparallel <- function(data.mat, p, max = 200){
   data.mat.tilde <- K %*% data.mat # data.mat.tilde is white data.mat - K is the pre-whitening matrix, ie. it whitens data.mat
 
   #parallel
-
-  #ica
-  ##
-  ##
+  W <- w.init
+  sW <- La.svd(W)
+  W <- sW$u %*% Diag(1/sW$d) %*% t(sW$u) %*% W
+  W1 <- W
+  lim <- rep(1000, maxit)
+  it <- 1
+  while (it < max) {
+    v1 <- tanh(W %*% data.mat.tilde) %*% t(data.mat.tilde)/c
+    v2 <- Diag(apply((1 - (tanh(W %*% data.mat.tilde))^2), 1, FUN = mean)) %*% W
+    w1 <- v1 - v2
+    sw1 <- La.svd(w1)
+    w1 <- sw1$u %*% Diag(1/sw1$d) %*% t(sw1$u) %*% w1
+    W <- w1
+    it <- it + 1
+  }
+  W
 
   ica.arr <- array(0, dim = c(rows,400,p))
   i <- 1
