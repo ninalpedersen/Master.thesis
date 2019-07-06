@@ -27,23 +27,19 @@ fastICAparallel <- function(data.mat, p, max = 200){
   K <- matrix(K[1:p, ], p, c) # only he selcted number of components
 
   data.mat.tilde <- K %*% data.mat # data.mat.tilde is white data.mat - K is the pre-whitening matrix, ie. it whitens data.mat
-  Diag <- function(d) if (length(d) > 1L)
-    diag(d)
   #parallel
+  f <- ncol(data.mat.tilde)
   W <- w.init
   svdW1 <- svd(W)
-  W <- svdW1$u %*% Diag(1/svdW1$d) %*% t(svdW1$u) %*% W
+  W <- svdW1$u %*% diag(1/svdW1$d) %*% t(svdW1$u) %*% W
   w <- W
-  tol =1e-04
-  lim <- rep(1000, max)
   it <- 1
-  while (it < max && lim[it] > tol) {
-    w1 <- tanh(W %*% data.mat.tilde) %*% t(data.mat.tilde)/c
+  while (it < max) {
+    w1 <- tanh(W %*% data.mat.tilde) %*% t(data.mat.tilde)/f
     w2 <- diag(apply((1 - (tanh(W %*% data.mat.tilde))^2), 1, FUN = mean)) %*% W
     w <- w1 - w2
     svdW2 <- svd(w)
-    w <- svdW2$u %*% Diag(1/svdW2$d) %*% t(svdW2$u) %*% w
-    lim[it + 1] <- max(Mod(Mod(diag(w %*% t(W))) - 1))
+    w <- svdW2$u %*% diag(1/svdW2$d) %*% t(svdW2$u) %*% w
     W <- w
     it <- it + 1
   }
