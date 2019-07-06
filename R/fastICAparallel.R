@@ -27,24 +27,36 @@ fastICAparallel <- function(data.mat, p, max = 200){
   K <- matrix(K[1:p, ], p, c) # only he selcted number of components
 
   data.mat.tilde <- K %*% data.mat # data.mat.tilde is white data.mat - K is the pre-whitening matrix, ie. it whitens data.mat
-
+  Diag <- function(d) if (length(d) > 1L)
+    diag(d)
   #parallel
   W <- w.init
-  sW <- La.svd(W)
-  W <- sW$u %*% Diag(1/sW$d) %*% t(sW$u) %*% W
-  W1 <- W
-  lim <- rep(1000, maxit)
+  svdW1 <- svd(W)
+  W <- svdW1$u %*% Diag(1/svdW1$d) %*% t(svdW1$u) %*% W
+  w <- W
+  tol =1e-04
+  lim <- rep(1000, max)
   it <- 1
-  while (it < max) {
-    v1 <- tanh(W %*% data.mat.tilde) %*% t(data.mat.tilde)/c
-    v2 <- Diag(apply((1 - (tanh(W %*% data.mat.tilde))^2), 1, FUN = mean)) %*% W
-    w1 <- v1 - v2
-    sw1 <- La.svd(w1)
-    w1 <- sw1$u %*% Diag(1/sw1$d) %*% t(sw1$u) %*% w1
-    W <- w1
+  while (it < max && lim[it] > tol) {
+    w1 <- tanh(W %*% data.mat.tilde) %*% t(data.mat.tilde)/c
+    w2 <- diag(apply((1 - (tanh(W %*% data.mat.tilde))^2), 1, FUN = mean)) %*% W
+    w <- w1 - w2
+    svdW2 <- svd(w)
+    w <- svdW2$u %*% Diag(1/svdW2$d) %*% t(svdW2$u) %*% w
+    lim[it + 1] <- max(Mod(Mod(diag(w %*% t(W))) - 1))
+    W <- w
     it <- it + 1
   }
-  W
+
+  #ica
+  w <- W %*% K
+  S <- w %*% data.mat # source matrix
+  A <- t(w) %*% solve(w %*% t(w)) #estimated mixing matrix, x = As
+  data.mat <- t(data.mat) #pre-processed data matrix
+  K <- t(K) #pre-whitening matrix
+  W <- t(W) #estimated un-mixing matrix, y = WAs = Wx
+  A <- t(A) #
+  S <- t(S) #estimated
 
   ica.arr <- array(0, dim = c(rows,400,p))
   i <- 1
@@ -56,7 +68,7 @@ fastICAparallel <- function(data.mat, p, max = 200){
       i <- i + 1
     }
   }
-  #return(ica <- list("arr" = ica.arr, "K" = K, "W" = W))
+  return(ica <- list("arr" = ica.arr, "K" = K, "W" = W, "iterations" = it))
 }
 
 
