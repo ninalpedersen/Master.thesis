@@ -2,7 +2,7 @@
 #'
 #' Implementation of the fixed point iteration method where a parallel scheme is used to find ICs.
 #'
-#' @param data.mat data matrix where the columns are bands
+#' @param data.mat white data matrix
 #' @param p number of components
 #' @param max maximum number of iterations
 #'
@@ -13,58 +13,23 @@
 #' @export
 
 fastICAparallel <- function(data.mat, p, max = 200){
-  r <- nrow(data.mat)
-  c <- ncol(data.mat)
   w.init <- matrix(rnorm(p^2), p, p)
-  data.mat <- scale(data.mat, scale = FALSE) # centering
-  data.mat <- t(data.mat)
-
-  #whitening
-  V <- data.mat %*% t(data.mat)/r # covariance matrix, E(x*x^T) = E*D*E^T
-  s <- La.svd(V) #whitening
-  D <- diag(c(1/sqrt(s$d))) # eigen values, D^(1/2)
-  K <- D %*% t(s$u) # Matrix to make data.mat white with
-  K <- matrix(K[1:p, ], p, c) # only he selcted number of components
-
-  data.mat.tilde <- K %*% data.mat # data.mat.tilde is white data.mat - K is the pre-whitening matrix, ie. it whitens data.mat
-  #parallel
-  f <- ncol(data.mat.tilde)
+  f <- ncol(data.mat)
   W <- w.init
   svdW1 <- svd(W)
   W <- svdW1$u %*% diag(1/svdW1$d) %*% t(svdW1$u) %*% W
   w <- W
   it <- 1
   while (it < max) {
-    w1 <- tanh(W %*% data.mat.tilde) %*% t(data.mat.tilde)/f
-    w2 <- diag(apply((1 - (tanh(W %*% data.mat.tilde))^2), 1, FUN = mean)) %*% W
+    w1 <- tanh(W %*% data.mat) %*% t(data.mat)/f
+    w2 <- diag(apply((1 - (tanh(W %*% data.mat))^2), 1, FUN = mean)) %*% W
     w <- w1 - w2
     svdW2 <- svd(w)
     w <- svdW2$u %*% diag(1/svdW2$d) %*% t(svdW2$u) %*% w
     W <- w
     it <- it + 1
   }
-
-  #ica
-  w <- W %*% K
-  S <- w %*% data.mat # source matrix
-  A <- t(w) %*% solve(w %*% t(w)) #estimated mixing matrix, x = As
-  data.mat <- t(data.mat) #pre-processed data matrix
-  K <- t(K) #pre-whitening matrix
-  W <- t(W) #estimated un-mixing matrix, y = WAs = Wx
-  A <- t(A) #
-  S <- t(S) #estimated
-
-  ica.arr <- array(0, dim = c(rows,400,p))
-  i <- 1
-  r <- 0
-  while(i < dim(data.mat)[1]){
-    r <- r + 1
-    for(c in 1:400){
-      ica.arr[r,c,] <- S[i,]
-      i <- i + 1
-    }
-  }
-  return(ica <- list("arr" = ica.arr, "K" = K, "W" = W, "iterations" = it))
+  return(W)
 }
 
 

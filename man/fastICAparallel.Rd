@@ -7,7 +7,7 @@
 fastICAparallel(data.mat, p, max = 200)
 }
 \arguments{
-\item{data.mat}{data matrix where the columns are bands}
+\item{data.mat}{white data matrix}
 
 \item{p}{number of components}
 
