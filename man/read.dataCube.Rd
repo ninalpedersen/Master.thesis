@@ -4,7 +4,7 @@
 \alias{read.dataCube}
 \title{Function for creating data matrix from raw data file.}
 \usage{
-read.dataCube(HSIdata, rows, cols, bands)
+read.dataCube(HSIdata, rows = 200, cols = 400, bands = 216)
 }
 \arguments{
 \item{HSIdata}{csv file}

@@ -13,7 +13,26 @@
 #'
 #' @export
 
-read.dataCube <- function(HSIdata, rows, cols, bands){
+read.dataCube <- function(HSIdata, rows = 200, cols = 400, bands = 216){
+
+  # =====================================================
+  if(typeof(rows) != "double"){
+    stop("rows must be a double")
+  }
+  if(typeof(cols) != "double"){
+    stop("cols must be a double")
+  }
+  if(typeof(bands) != "double"){
+    stop("bands must be a double")
+  }
+  if(typeof(HSIdata) != "character"){
+    message("'HSIdata' must be a character string or connection")
+  }
+  # =====================================================
+
+
+
+
   dataCube <- read.csv(HSIdata, header = F, sep="")
   dataCube <- dataCube[1:dim(dataCube)[1],]
   data <- as.matrix(dataCube)
