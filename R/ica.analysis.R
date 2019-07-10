@@ -13,6 +13,23 @@
 
 
 ica.analysis <- function(data, p, scheme = c("deflation","parallel"),max = 200){
+
+  # =====================================================
+  if(scheme != "deflation" && scheme != "parallel"){
+    stop("Method must be either 'naive' or 'kernel'")
+  }
+  if(missing(p)){
+    stop("number of components must be chosen")
+  }
+  if(typeof(p) != "double"){
+    stop("p must be a double")
+  }
+  if(missing(max)){
+    message("Maximum number of iterations missing - default used.")
+  }
+  # =====================================================
+
+
   r <- nrow(data)
   c <- ncol(data)
   data.c <- scale(data, scale = FALSE) # centering
@@ -26,10 +43,11 @@ ica.analysis <- function(data, p, scheme = c("deflation","parallel"),max = 200){
   K <- matrix(K[1:p, ], p, c) # only he selcted number of components
 
   data.c.tilde <- K %*% data.c # data.mat.tilde is white data.mat - K is the pre-whitening matrix, ie. it whitens data.mat
-  W <- if (scheme == "deflation")
-        fastICAdeflation(data.c.tilde,p,max)
-      else if (scheme == "parallel")
-        fastICAparallel(data.c.tilde,p,max)
+  W <- if (scheme == "deflation"){
+    fastICAdeflation(data.c.tilde,p,max)
+  } else if(scheme == "parallel"){
+    fastICAparallel(data.c.tilde,p,max)
+  }
 
   #ica
   w <- W %*% K
