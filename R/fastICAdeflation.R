@@ -2,9 +2,9 @@
 #'
 #' Implementation of the fixed point iteration method where a deflation scheme is used to find ICs.
 #'
-#' @param data.mat data matrix where the columns are bands
+#' @param data.mat white data matrix
 #' @param p number of components
-#' @param max maximum number of iterations
+#' @param iter number of iterations
 #'
 #' @return ica.arr independent component array
 #' @examples
@@ -12,7 +12,7 @@
 #'
 #' @export
 
-fastICAdeflation <- function(data.mat, p, max = 200){
+fastICAdeflation <- function(data.mat, p, iter = 200){
   w.init <- matrix(rnorm(p^2), p, p)
   c <- ncol(data.mat)
   W <- matrix(0, p, p)
@@ -30,7 +30,7 @@ fastICAdeflation <- function(data.mat, p, max = 200){
     w <- w/sqrt(sum(w^2))
     conv <- 1
     iter <- 1
-    while (iter < max) {
+    while (iter < iter) {
       xg <- data.mat * matrix(tanh(t(w) %*% data.mat), p, c, byrow = TRUE)
       w1 <- apply(xg, 1, FUN = mean) - mean(1 - (tanh(t(w) %*% data.mat))^2) * w
       w1 <- matrix(w1, p, 1)

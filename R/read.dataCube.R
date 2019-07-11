@@ -1,6 +1,6 @@
 #' Function for creating data matrix from raw data file.
 #'
-#' Creates a data matrix from a .csv file containing HSI data. The input data must be (rowsxcols)xbands
+#' Creates a data matrix from a .csv file containing HSI data. The input data must have the following dimension, (rowsxcols)xbands
 #'
 #' @param HSIdata csv file
 #' @param rows number of rows
@@ -29,9 +29,6 @@ read.dataCube <- function(HSIdata, rows = 200, cols = 400, bands = 216){
     message("'HSIdata' must be a character string or connection")
   }
   # =====================================================
-
-
-
 
   dataCube <- read.csv(HSIdata, header = F, sep="")
   dataCube <- dataCube[1:dim(dataCube)[1],]

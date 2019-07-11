@@ -1,22 +1,24 @@
-#' function to whiten data before performing ICA analysis.
+#' Function to perform the fastICA.
 #'
-#' Whitening method that uses singular value decomposition.
+#' Function that estimates the independent components.
 #'
 #' @param data data matrix to be whiten
 #' @param p number of components
+#' @param scheme choose the method for the fastICA
+#' @param iter number of iterations
 #'
 #' @return white data for ICA analysis
 #' @examples
-#' data.white <- whiten(data,3)
+#' data.white <- ica.analysis(data,3)
 #'
 #' @export
 
 
-ica.analysis <- function(data, p, scheme = c("deflation","parallel"),max = 200){
+ica.analysis <- function(data, p, scheme = c("deflation","parallel"),iter = 200){
 
   # =====================================================
   if(scheme != "deflation" && scheme != "parallel"){
-    stop("Method must be either 'naive' or 'kernel'")
+    stop("Method must be either 'defaltion' or 'parallel'")
   }
   if(missing(p)){
     stop("number of components must be chosen")
@@ -24,8 +26,8 @@ ica.analysis <- function(data, p, scheme = c("deflation","parallel"),max = 200){
   if(typeof(p) != "double"){
     stop("p must be a double")
   }
-  if(missing(max)){
-    message("Maximum number of iterations missing - default used.")
+  if(missing(iter)){
+    message("Number of iterations missing - default used.")
   }
   # =====================================================
 
@@ -44,9 +46,9 @@ ica.analysis <- function(data, p, scheme = c("deflation","parallel"),max = 200){
 
   data.c.tilde <- K %*% data.c # data.mat.tilde is white data.mat - K is the pre-whitening matrix, ie. it whitens data.mat
   W <- if (scheme == "deflation"){
-    fastICAdeflation(data.c.tilde,p,max)
+    fastICAdeflation(data.c.tilde,p,iter)
   } else if(scheme == "parallel"){
-    fastICAparallel(data.c.tilde,p,max)
+    fastICAparallel(data.c.tilde,p,iter)
   }
 
   #ica

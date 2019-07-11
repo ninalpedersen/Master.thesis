@@ -4,7 +4,7 @@
 #'
 #' @param data.mat white data matrix
 #' @param p number of components
-#' @param max maximum number of iterations
+#' @param iter number of iterations
 #'
 #' @return ica.arr independent component array
 #' @examples
@@ -12,7 +12,7 @@
 #'
 #' @export
 
-fastICAparallel <- function(data.mat, p, max = 200){
+fastICAparallel <- function(data.mat, p, iter = 200){
   w.init <- matrix(rnorm(p^2), p, p)
   f <- ncol(data.mat)
   W <- w.init
@@ -20,7 +20,7 @@ fastICAparallel <- function(data.mat, p, max = 200){
   W <- svdW1$u %*% diag(1/svdW1$d) %*% t(svdW1$u) %*% W
   w <- W
   it <- 1
-  while (it < max) {
+  while (it < iter) {
     w1 <- tanh(W %*% data.mat) %*% t(data.mat)/f
     w2 <- diag(apply((1 - (tanh(W %*% data.mat))^2), 1, FUN = mean)) %*% W
     w <- w1 - w2
