@@ -4,14 +4,14 @@
 \alias{fastICAparallel}
 \title{fastICA implementation using a parallel scheme}
 \usage{
-fastICAparallel(data.mat, p, max = 200)
+fastICAparallel(data.mat, p, iter = 200)
 }
 \arguments{
 \item{data.mat}{white data matrix}
 
 \item{p}{number of components}
 
-\item{max}{maximum number of iterations}
+\item{iter}{number of iterations}
 }
 \value{
 ica.arr independent component array

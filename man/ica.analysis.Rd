@@ -2,22 +2,26 @@
 % Please edit documentation in R/ica.analysis.R
 \name{ica.analysis}
 \alias{ica.analysis}
-\title{function to whiten data before performing ICA analysis.}
+\title{Function to perform the fastICA.}
 \usage{
-ica.analysis(data, p, scheme = c("deflation", "parallel"), max = 200)
+ica.analysis(data, p, scheme = c("deflation", "parallel"), iter = 200)
 }
 \arguments{
 \item{data}{data matrix to be whiten}
 
 \item{p}{number of components}
+
+\item{scheme}{choose the method for the fastICA}
+
+\item{iter}{number of iterations}
 }
 \value{
 white data for ICA analysis
 }
 \description{
-Whitening method that uses singular value decomposition.
+Function that estimates the independent components.
 }
 \examples{
-data.white <- whiten(data,3)
+data.white <- ica.analysis(data,3)
 
 }

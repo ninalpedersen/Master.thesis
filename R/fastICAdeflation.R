@@ -28,9 +28,8 @@ fastICAdeflation <- function(data.mat, p, iter = 200){
       w <- w - temp.w
     }
     w <- w/sqrt(sum(w^2))
-    conv <- 1
-    iter <- 1
-    while (iter < iter) {
+    it <- 1
+    while (it < iter) {
       xg <- data.mat * matrix(tanh(t(w) %*% data.mat), p, c, byrow = TRUE)
       w1 <- apply(xg, 1, FUN = mean) - mean(1 - (tanh(t(w) %*% data.mat))^2) * w
       w1 <- matrix(w1, p, 1)
@@ -44,7 +43,7 @@ fastICAdeflation <- function(data.mat, p, iter = 200){
       }
       w1 <- w1/sqrt(sum(w1^2))
       w <- matrix(w1, p, 1)
-      iter <- iter + 1
+      it <- it + 1
     }
     W[i, ] <- w
   }

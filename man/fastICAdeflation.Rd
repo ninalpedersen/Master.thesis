@@ -4,14 +4,14 @@
 \alias{fastICAdeflation}
 \title{fastICA implementation using a deflation scheme}
 \usage{
-fastICAdeflation(data.mat, p, max = 200)
+fastICAdeflation(data.mat, p, iter = 200)
 }
 \arguments{
-\item{data.mat}{data matrix where the columns are bands}
+\item{data.mat}{white data matrix}
 
 \item{p}{number of components}
 
-\item{max}{maximum number of iterations}
+\item{iter}{number of iterations}
 }
 \value{
 ica.arr independent component array

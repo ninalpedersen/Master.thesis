@@ -19,7 +19,7 @@ read.dataCube(HSIdata, rows = 200, cols = 400, bands = 216)
 data.mat data in matrix format
 }
 \description{
-Creates a data matrix from a .csv file containing HSI data. The input data must be (rowsxcols)xbands
+Creates a data matrix from a .csv file containing HSI data. The input data must have the following dimension, (rowsxcols)xbands
 }
 \examples{
 data.mat <- read.dataCube("syntetisk_aeble.csv",rows,cols,bands)
