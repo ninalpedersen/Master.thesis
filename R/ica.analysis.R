@@ -71,7 +71,7 @@ ica.analysis <- function(data, p, scheme = c("deflation","parallel"),iter = 200)
       i <- i + 1
     }
   }
-  return(ica <- list("arr" = ica.arr, "K" = K, "W" = W))
+  return(ica <- list("arr" = ica.arr, "S"=S, "K" = K, "W" = W))
 }
 
 
