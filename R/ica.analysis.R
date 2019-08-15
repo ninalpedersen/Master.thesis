@@ -14,11 +14,11 @@
 #' @export
 
 
-ica.analysis <- function(data, p, scheme = c("deflation","parallel"),iter = 200){
+ica.analysis <- function(data, p, scheme = c("deflation","parallel","infomax"),iter = 200){
 
   # =====================================================
-  if(scheme != "deflation" && scheme != "parallel"){
-    stop("Method must be either 'defaltion' or 'parallel'")
+  if(scheme != "deflation" && scheme != "parallel" && scheme != "infomax"){
+    stop("Method must be either 'deflation' or 'parallel' or 'infomax'")
   }
   if(missing(p)){
     stop("number of components must be chosen")
@@ -49,6 +49,8 @@ ica.analysis <- function(data, p, scheme = c("deflation","parallel"),iter = 200)
     fastICAdeflation(data.c.tilde,p,iter)
   } else if(scheme == "parallel"){
     fastICAparallel(data.c.tilde,p,iter)
+  } else if(scheme == "infomax"){
+    infomax(data.c.tilde,p,iter)
   }
 
   #ica
@@ -71,7 +73,7 @@ ica.analysis <- function(data, p, scheme = c("deflation","parallel"),iter = 200)
       i <- i + 1
     }
   }
-  return(ica <- list("arr" = ica.arr, "S"=S, "K" = K, "W" = W))
+  return(ica <- list("arr" = ica.arr, "S"=S, "K" = K, "W" = W, "datac" = data.c, "data.c.tilde" = data.c.tilde))
 }
 
 

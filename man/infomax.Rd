@@ -4,7 +4,7 @@
 \alias{infomax}
 \title{Infomax implementation}
 \usage{
-infomax(data.mat, p, max = 200)
+infomax(data.mat, p, maxit = 200)
 }
 \arguments{
 \item{data.mat}{data matrix where the columns are bands}

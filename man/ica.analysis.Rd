@@ -4,7 +4,8 @@
 \alias{ica.analysis}
 \title{Function to perform the fastICA.}
 \usage{
-ica.analysis(data, p, scheme = c("deflation", "parallel"), iter = 200)
+ica.analysis(data, p, scheme = c("deflation", "parallel", "infomax"),
+  iter = 200)
 }
 \arguments{
 \item{data}{data matrix to be whiten}
