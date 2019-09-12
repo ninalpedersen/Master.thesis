@@ -4,10 +4,13 @@
 \alias{read.dataCube}
 \title{Function for creating data matrix from raw data file.}
 \usage{
-read.dataCube(HSIdata, rows = 200, cols = 400, bands = 216)
+read.dataCube(HSIdata, separator = "", rows = 200, cols = 400,
+  bands = 216)
 }
 \arguments{
 \item{HSIdata}{csv file}
+
+\item{separator}{the field separator character}
 
 \item{rows}{number of rows}
 
@@ -22,6 +25,6 @@ data.mat data in matrix format
 Creates a data matrix from a .csv file containing HSI data. The input data must have the following dimension, (rowsxcols)xbands
 }
 \examples{
-data.mat <- read.dataCube("syntetisk_aeble.csv",rows,cols,bands)
+data.mat <- read.dataCube("syntetisk_aeble.csv","",rows,cols,bands)
 
 }

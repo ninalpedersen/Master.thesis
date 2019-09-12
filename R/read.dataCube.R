@@ -3,17 +3,18 @@
 #' Creates a data matrix from a .csv file containing HSI data. The input data must have the following dimension, (rowsxcols)xbands
 #'
 #' @param HSIdata csv file
+#' @param separator the field separator character
 #' @param rows number of rows
 #' @param cols number of columns
 #' @param bands number of bands
 #'
 #' @return data.mat data in matrix format
 #' @examples
-#' data.mat <- read.dataCube("syntetisk_aeble.csv",rows,cols,bands)
+#' data.mat <- read.dataCube("syntetisk_aeble.csv","",rows,cols,bands)
 #'
 #' @export
 
-read.dataCube <- function(HSIdata, rows = 200, cols = 400, bands = 216){
+read.dataCube <- function(HSIdata, separator = "", rows = 200, cols = 400, bands = 216){
 
   # =====================================================
   if(typeof(rows) != "double"){
@@ -28,10 +29,13 @@ read.dataCube <- function(HSIdata, rows = 200, cols = 400, bands = 216){
   if(typeof(HSIdata) != "character"){
     message("'HSIdata' must be a character string or connection")
   }
+  if(typeof(separator) != "character"){
+    message("'separator' must be a character string")
+  }
   # =====================================================
 
-  dataCube <- read.csv(HSIdata, header = F, sep="")
-  dataCube <- dataCube[1:dim(dataCube)[1],]
+  dataCube <- read.csv(HSIdata, header = F, sep=separator)
+  dataCube <- dataCube[1:dim(dataCube)[1],1:bands]
   data <- as.matrix(dataCube)
 
   # matrix to not summed array

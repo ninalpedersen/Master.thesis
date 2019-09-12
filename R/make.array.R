@@ -18,9 +18,6 @@ make.array <- function(mat, bands){
   if(typeof(bands) != "double"){
     stop("bands must be a double!")
   }
-  if(typeof(mat) != "matrix"){
-    stop("'matrix' must be a matrix!")
-  }
   # =====================================================
   arr <- array(0, dim = c(200,400,bands))
   i <- 1
@@ -29,7 +26,7 @@ make.array <- function(mat, bands){
     while(i < 80000){
       r <- r + 1
       for(c in 1:400){
-        arr[r,c,] <- mat[i]
+        arr[r,c,] <- mat[i,]
         i <- i + 1
       }
     }
@@ -42,5 +39,5 @@ make.array <- function(mat, bands){
       }
     }
   }
-  return(mat)
+  return(arr)
 }
