@@ -4,7 +4,7 @@
 \alias{make.array}
 \title{Function converting 80000xbands matrix to 200x400xbands array.}
 \usage{
-make.array(mat, bands)
+make.array(mat, rows, cols, bands)
 }
 \arguments{
 \item{mat}{matrix with 80000xbands dimension}

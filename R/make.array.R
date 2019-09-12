@@ -9,9 +9,15 @@
 #'
 #' @export
 
-make.array <- function(mat, bands){
+make.array <- function(mat, rows, cols, bands){
 
   # =====================================================
+  if(missing(rows)){
+    stop("Number of rows missing!")
+  }
+  if(missing(cols)){
+    stop("Number of cols missing!")
+  }
   if(missing(bands)){
     stop("Number of bands missing!")
   }
@@ -19,21 +25,21 @@ make.array <- function(mat, bands){
     stop("bands must be a double!")
   }
   # =====================================================
-  arr <- array(0, dim = c(200,400,bands))
+  arr <- array(0, dim = c(rows,cols,bands))
   i <- 1
   r <- 0
   if(bands == 1){
-    while(i < 80000){
+    while(i < rows*cols){
       r <- r + 1
-      for(c in 1:400){
+      for(c in 1:cols){
         arr[r,c,] <- mat[i,]
         i <- i + 1
       }
     }
   }else{
-    while(i < 80000){
+    while(i < rows*cols){
       r <- r + 1
-      for(c in 1:400){
+      for(c in 1:cols){
         arr[r,c,] <- mat[i,]
         i <- i + 1
       }
