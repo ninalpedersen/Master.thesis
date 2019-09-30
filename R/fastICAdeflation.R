@@ -23,8 +23,6 @@ fastICAdeflation <- function(data.mat, p, iter = 200){
       temp.w <- w
       temp.w[1:length(w)] <- 0
       for (j in 1:(i - 1)){
-        #k <- sum(w *W[j, ])
-        #temp.w <- temp.w + k * W[j, ]
         temp.w <- temp.w + sum(w * W[j, ]) * W[j, ]
       }
       w <- w - temp.w
@@ -39,8 +37,6 @@ fastICAdeflation <- function(data.mat, p, iter = 200){
         temp.w <- w1
         temp.w[1:length(w1)] <- 0
         for (j in 1:(i - 1)){
-          #k <- sum(w *W[j, ])
-          #temp.w <- temp.w + k * W[j, ]
           temp.w <- temp.w + sum(w1 * W[j, ]) * W[j, ]
         }
         w1 <- w1 - temp.w
