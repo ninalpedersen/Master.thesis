@@ -13,7 +13,7 @@
 #' @export
 
 infomax <- function(data.mat, p, maxit = 200){
-  w.init <- diag(p)
+  w.init <-  matrix(rnorm(p^2), p, p)#diag(p)
   alpha <- 1
   L.init <- ncol(data.mat)*log(abs(det(w.init)))+sum(-w.init%*%data.mat-2*log(1+exp(-w.init%*%data.mat)))
   deltaW <- solve(t(w.init))+((1-2*(1/(1+exp(-w.init%*%data.mat))))%*%t(data.mat))/ncol(data.mat)

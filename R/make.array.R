@@ -32,7 +32,7 @@ make.array <- function(mat, rows, cols, bands){
     while(i < rows*cols){
       r <- r + 1
       for(c in 1:cols){
-        arr[r,c,] <- mat[i,]
+        arr[r,c,] <- mat[i]
         i <- i + 1
       }
     }
